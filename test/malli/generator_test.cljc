@@ -24,6 +24,14 @@
         (doseq [value (mg/sample ?schema {:seed 123})]
           (is (m/validate ?schema value))))))
 
+  (testing "map entries"
+    (is (= {:korppu "koira"
+            :piilomaan "pikku aasi"
+            :muuli "mukkelis"}
+           (mg/generate [:map {:gen/fmap '#(assoc % :korppu "koira")}
+                         [:piilomaan {:gen/fmap '(partial str "pikku ")} [:string {:gen/elements ["aasi"]}]]
+                         [:muuli {:gen/elements ["mukkelis"]} [:string {:gen/elements ["???"]}]]]))))
+
   (testing "string"
     (let [schema [:string {:min 1, :max 4}]]
       (is (every? (partial m/validate schema) (mg/sample schema {:size 1000})))))
