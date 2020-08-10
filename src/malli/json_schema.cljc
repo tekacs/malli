@@ -111,4 +111,4 @@
   ([?schema]
    (transform ?schema nil))
   ([?schema options]
-   (m/walk ?schema -json-schema-walker (assoc options ::m/walk-map-entries true))))
+   (m/walk ?schema -json-schema-walker (assoc options ::m/walk-entries true))))
